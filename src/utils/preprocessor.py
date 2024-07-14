@@ -31,7 +31,7 @@ def main():
     if list_of_documents:
         embedding_model = get_embeddings()
         if embedding_model:
-            db = FAISS.from_documents(list_of_documents, embedding_model)
+            db = FAISS.from_documents(list_of_documents, embedding_model, normalize_L2 = True)
             db.save_local(cfg["embedding_path"])
         else:
             print("Download the embedding model from ollama.")

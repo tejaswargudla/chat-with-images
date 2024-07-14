@@ -9,7 +9,10 @@ from src.utils.embeddings import get_embeddings
 embedding_model = get_embeddings()
 cfg = dotenv_values(".env")
 
-faiss = FAISS.load_local("faiss_data", embeddings= embedding_model, allow_dangerous_deserialization=True)
+faiss = FAISS.load_local("faiss_data",
+                         embeddings= embedding_model,
+                         normalize_L2 = True,
+                         allow_dangerous_deserialization=True)
 st.title("Chat With your Images")
 prompt = "Hello"
 # Initialize chat history
@@ -28,10 +31,11 @@ if prompt := st.chat_input("What is up?"):
         st.markdown(prompt)
     # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
-    docs = faiss.similarity_search(prompt)
-    if docs:
-        images = [doc.metadata.get("imagepath") for doc in docs]
-        response = f"Echo: {st.image(images)}"
+    faiss_op = faiss.similarity_search_with_relevance_scores(prompt)
+    
+    images = [doc.metadata.get("imagepath") for doc, score in faiss_op if score > float(cfg.get("min_score_threshold"))]
+    if images:
+        response = f"Echo: {st.image(images, width=300)}"
     else:
         response = "Echo: Didnt find any pics in the repository."
     
