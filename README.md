@@ -13,3 +13,14 @@ Our project converts images to text and then to embeddings, enabling users to ch
 ![sample_chat1](assets/sample1.png)
 ![sample_chat2](assets/sample2.png)
 
+
+---
+### Author
+---
+
+#### Tejeswara Rao Gudla
+
+Feel free to connect with me on:
+
+Linkedin: https://www.linkedin.com/in/tejaswarrao/ 
+
