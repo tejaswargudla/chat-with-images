@@ -1,0 +1,6 @@
+embedding_model="nomic-embed-text"
+mutlimodal_model="llava"
+path="images/"
+
+embedding_path="faiss_data"
+min_score_threshold=0.3
